@@ -57,17 +57,64 @@ const Theme = {
 const WIDTH = 420;
 const HEIGHT = 300;
 
-const PANEL_IMAGES = [
-    '/usr/share/face-unlock/assets/1.png',
-    '/usr/share/face-unlock/assets/2.png',
-    '/usr/share/face-unlock/assets/3.png',
-    '/usr/share/face-unlock/assets/h.png',
-    '/usr/share/face-unlock/assets/o.png',
-    '/usr/share/face-unlock/assets/v.png',
-];
+const PANEL_IMAGE_DIR = '/usr/share/face-unlock/assets';
 
-function randomPanelImage() {
-    return PANEL_IMAGES[Math.floor(Math.random() * PANEL_IMAGES.length)];
+function findPanelImages() {
+    const images = [];
+    const allowedExtensions = new Set([
+        '.png',
+        '.jpg',
+        '.jpeg',
+        '.webp',
+        '.bmp',
+    ]);
+
+    try {
+        const dir = Gio.File.new_for_path(PANEL_IMAGE_DIR);
+        const enumerator = dir.enumerate_children(
+            'standard::name,standard::type',
+            Gio.FileQueryInfoFlags.NONE,
+            null
+        );
+
+        let info;
+        while ((info = enumerator.next_file(null)) !== null) {
+            if (info.get_file_type() !== Gio.FileType.REGULAR)
+                continue;
+
+            const name = info.get_name();
+            const lowerName = name.toLowerCase();
+
+            const isImage = [...allowedExtensions].some(ext =>
+                lowerName.endsWith(ext)
+            );
+
+            if (!isImage)
+                continue;
+
+            const path = dir.get_child(name).get_path();
+            if (path)
+                images.push(path);
+        }
+
+        enumerator.close(null);
+    } catch (e) {
+        logError(e, 'face-unlock panel image directory');
+    }
+
+    return images;
+}
+
+function shuffleImages(images) {
+    const shuffled = [...images];
+
+    // Fisher-Yates shuffle.
+    for (let i = shuffled.length - 1; i > 0; --i) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    return shuffled;
 }
 
 // Qt's easing curves, as the QML uses them.
@@ -659,7 +706,11 @@ const PILL_SHAKE = [
 // closes again.
 class Bubble {
     constructor() {
-        this._panelImage = randomPanelImage();
+        this._panelImageQueue = [];
+        this._panelImageSignature = '';
+        this._lastPanelImage = null;
+        this._panelImage = null;
+
         this.actor = new St.DrawingArea({reactive: false, visible: false});
         this.actor.connect('repaint', area => this._repaint(area));
         this._timeline = new Clutter.Timeline({actor: this.actor, duration: 1000, repeat_count: -1});
@@ -758,9 +809,46 @@ class Bubble {
         }
     }
 
+    _nextPanelImage() {
+        // Sort first so the signature is stable even if the filesystem
+        // returns entries in a different order.
+        const images = findPanelImages().sort();
+        const signature = images.join('\n');
+
+        // If files were added or removed, start a fresh cycle immediately.
+        if (signature !== this._panelImageSignature) {
+            this._panelImageSignature = signature;
+            this._panelImageQueue = shuffleImages(images);
+        } else if (this._panelImageQueue.length === 0) {
+            // Every image has been shown once. Start a new shuffled cycle.
+            this._panelImageQueue = shuffleImages(images);
+        }
+
+        if (this._panelImageQueue.length === 0) {
+            this._lastPanelImage = null;
+            return null;
+        }
+
+        // Do not let the first image of a new cycle equal the final image
+        // of the previous cycle when there is another choice.
+        if (this._panelImageQueue.length > 1 &&
+            this._panelImageQueue[this._panelImageQueue.length - 1] === this._lastPanelImage) {
+            const last = this._panelImageQueue.length - 1;
+            [this._panelImageQueue[0], this._panelImageQueue[last]] =
+                [this._panelImageQueue[last], this._panelImageQueue[0]];
+        }
+
+        const image = this._panelImageQueue.pop();
+        this._lastPanelImage = image;
+
+        console.log(`face-unlock panel image: ${image}`);
+
+        return image;
+    }
+
     _choreograph(wantOpen, at) {
         if (wantOpen) {
-            this._panelImage = randomPanelImage();
+            this._panelImage = this._nextPanelImage();
             this._opening = true;
             this._cancel('slideOut');
             this._cancel('closeDone');
@@ -894,27 +982,33 @@ class Bubble {
         roundedRect(cr, x, y, w, h, radius);
         cr.clip();
 
-        try {
-            const pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-                this._panelImage,
-                Math.ceil(w),
-                Math.ceil(h),
-                false
-            );
+        if (this._panelImage) {
+            try {
+                const pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                    this._panelImage,
+                    Math.ceil(w),
+                    Math.ceil(h),
+                    false
+                );
 
-            Gdk.cairo_set_source_pixbuf(cr, pixbuf, x, y);
-            cr.paint();
+                Gdk.cairo_set_source_pixbuf(cr, pixbuf, x, y);
+                cr.paint();
 
-            // Darken the image slightly so glyphs and text stay readable.
-            rgba(cr, [0, 0, 0], 0.22);
+                // Darken the image slightly so glyphs and text stay readable.
+                rgba(cr, [0, 0, 0], 0.22);
+                roundedRect(cr, x, y, w, h, radius);
+                cr.fill();
+            } catch (e) {
+                rgba(cr, Theme.panel, 0.9);
+                roundedRect(cr, x, y, w, h, radius);
+                cr.fill();
+                logError(e, 'face-unlock panel image');
+            }
+        } else {
+            // No usable images: keep the original face-unlock background.
+            rgba(cr, Theme.panel);
             roundedRect(cr, x, y, w, h, radius);
             cr.fill();
-        } catch (e) {
-            // Fall back to the normal panel if an image cannot be loaded.
-            rgba(cr, Theme.panel, 0.9);
-            roundedRect(cr, x, y, w, h, radius);
-            cr.fill();
-            logError(e, 'face-unlock panel image');
         }
 
         cr.restore();
