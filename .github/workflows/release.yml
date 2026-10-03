@@ -1,0 +1,333 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: >-
+          Build the repositories with a throwaway key and install from them,
+          without publishing anything.
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  deb:
+    name: Debian package (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    # The package depends on the exact Qt it was built against, so each
+    # distribution gets a build and an APT repository of its own.
+    strategy:
+      matrix:
+        include:
+          # Qt 6 and KDE Frameworks 6 arrived in Debian with trixie.
+          - name: Debian 13
+            image: debian:trixie
+            codename: trixie
+            suffix: "~deb13"
+          - name: Ubuntu 26.04
+            image: ubuntu:26.04
+            codename: resolute
+            suffix: "~ubuntu26.04"
+    container: ${{ matrix.image }}
+    env:
+      DEBIAN_FRONTEND: noninteractive
+    steps:
+      - name: Install the build tools
+        run: |
+          apt-get update -qq
+          # Older Qt has the Wayland client tools in a package of their own.
+          extra=""
+          [ -n "$(apt-cache madison qt6-wayland-dev-tools)" ] && extra="qt6-wayland-dev-tools"
+          apt-get install -y --no-install-recommends \
+            ca-certificates curl git make cmake g++ pkg-config gettext scdoc dpkg-dev \
+            qt6-base-dev qt6-base-dev-tools qt6-base-private-dev qt6-declarative-dev \
+            qt6-wayland-dev qt6-wayland-private-dev $extra \
+            liblayershellqtinterface-dev libkf6i18n-dev \
+            libopencv-dev libpam0g-dev libsystemd-dev
+
+      - uses: actions/checkout@v7
+
+      - name: Check the tag against the Makefile
+        run: packaging/check-version.sh "${{ github.ref_name }}"
+
+      - name: Check CHANGELOG.md has this release
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: .github/release-notes.sh --title "${{ github.ref_name }}"
+
+      - run: packaging/build-deb.sh
+        env:
+          DEB_SUFFIX: ${{ matrix.suffix }}
+
+      - name: Look inside what was built
+        run: |
+          dpkg-deb --info dist/*.deb
+          dpkg-deb --contents dist/*.deb
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: deb-${{ matrix.codename }}
+          path: dist/*.deb
+          if-no-files-found: error
+
+  rpm:
+    name: RPM package
+    runs-on: ubuntu-latest
+    container: fedora:latest
+    steps:
+      - name: Install the build tools
+        run: |
+          dnf install -y --setopt=install_weak_deps=False \
+            git make cmake gcc-c++ gettext scdoc tar curl rpm-build rpm-sign systemd-rpm-macros \
+            'pkgconfig(systemd)' 'pkgconfig(libsystemd)' pam-devel opencv-devel \
+            qt6-qtbase-devel qt6-qtbase-private-devel qt6-qtdeclarative-devel qt6-qtwayland-devel \
+            layer-shell-qt-devel kf6-ki18n-devel
+
+      - uses: actions/checkout@v7
+
+      - name: Check the tag against the Makefile
+        run: packaging/check-version.sh "${{ github.ref_name }}"
+
+      - run: packaging/build-rpm.sh
+
+      - name: Sign the package
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            gpg --batch --passphrase '' --quick-generate-key \
+              'dry run <dry-run@example.invalid>' rsa2048 sign never
+          elif [ -n "${GPG_PRIVATE_KEY:-}" ]; then
+            printf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
+          else
+            echo "No GPG_PRIVATE_KEY secret; leaving the package unsigned."
+            exit 0
+          fi
+          keyid="$(gpg --list-secret-keys --with-colons | awk -F: '/^sec:/ { print $5; exit }')"
+          rpmsign --define "_gpg_name $keyid" --addsign dist/*.rpm
+          gpg --armor --export "$keyid" > dist/rpm-signer.asc
+          rpm --import dist/rpm-signer.asc
+          rpm --checksig dist/*.rpm
+
+      - name: Look inside what was built
+        run: |
+          rpm -qip dist/face-unlock-[0-9]*.rpm
+          rpm -qlp dist/face-unlock-[0-9]*.rpm
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: rpm
+          path: |
+            dist/*.rpm
+            dist/rpm-signer.asc
+          if-no-files-found: error
+
+  tarball:
+    name: Arch Linux tarball
+    runs-on: ubuntu-latest
+    # Built on Arch itself, because the agent only fits the Qt it was built
+    # against. OpenCV is linked in, so no opencv here.
+    container: archlinux:latest
+    steps:
+      - name: Install the build tools
+        run: |
+          pacman -Syu --noconfirm --needed git base-devel cmake pkgconf curl zstd \
+            qt6-base qt6-declarative qt6-wayland layer-shell-qt ki18n \
+            pam systemd-libs gettext scdoc
+
+      - uses: actions/checkout@v7
+
+      - name: Check the tag against the Makefile
+        run: packaging/check-version.sh "${{ github.ref_name }}"
+
+      - run: packaging/build-opencv.sh
+
+      - run: packaging/build-tarball.sh
+
+      - name: Install it and run it
+        run: |
+          tar -xf dist/*.tar.zst --strip-components=1 -C /
+          for f in /usr/lib/face-unlock/* /usr/lib/security/pam_face_unlock.so; do
+            if ldd "$f" | grep 'not found'; then echo "$f is missing a library"; exit 1; fi
+          done
+          /usr/lib/face-unlock/face-unlockd --version
+          useradd -m tester
+          runuser -u tester -- face-unlock --version
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: tarball
+          path: dist/*.tar.zst
+          if-no-files-found: error
+
+  publish:
+    name: Release and repositories
+    needs: [deb, rpm, tarball]
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.dry_run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # All tags, for the link to the changes since the last release.
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v8
+        with:
+          path: incoming
+          merge-multiple: true
+
+      - name: Attach the packages to the release
+        if: ${{ !inputs.dry_run }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          .github/release-notes.sh "${{ github.ref_name }}" > notes.md
+          gh release create "${{ github.ref_name }}" \
+            --title "$(.github/release-notes.sh --title "${{ github.ref_name }}")" \
+            --notes-file notes.md \
+            incoming/*.deb incoming/*.rpm incoming/*.tar.zst \
+          || gh release upload "${{ github.ref_name }}" \
+            incoming/*.deb incoming/*.rpm incoming/*.tar.zst --clobber
+
+      - name: Install the repository tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            dpkg-dev apt-utils createrepo-c
+
+      - name: Get a signing key
+        id: key
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            gpg --batch --passphrase '' --quick-generate-key \
+              'dry run <dry-run@example.invalid>' rsa2048 sign never
+          elif [ -n "${GPG_PRIVATE_KEY:-}" ]; then
+            printf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
+          else
+            echo "present=no" >> "$GITHUB_OUTPUT"
+            echo "::warning::No GPG_PRIVATE_KEY secret, so the apt and dnf repositories were not updated. The packages are on the release."
+            exit 0
+          fi
+          echo "present=yes" >> "$GITHUB_OUTPUT"
+
+      - name: Check out the published repositories
+        if: steps.key.outputs.present == 'yes' && !inputs.dry_run
+        uses: actions/checkout@v7
+        with:
+          ref: gh-pages
+          path: pages
+        continue-on-error: true
+
+      - name: Update the repositories
+        if: steps.key.outputs.present == 'yes'
+        run: |
+          if [ ! -d pages/.git ]; then
+            rm -rf pages && mkdir pages
+            git -C pages init -q -b gh-pages
+            git -C pages remote add origin "https://github.com/${{ github.repository }}.git"
+          fi
+          rm -f incoming/rpm-signer.asc
+          packaging/publish-repos.sh pages incoming
+
+      - name: Check that what was written can be verified
+        if: steps.key.outputs.present == 'yes'
+        run: |
+          for suite in pages/deb/*/; do
+            gpg --verify "$suite/InRelease"
+            gpg --verify "$suite/Release.gpg" "$suite/Release"
+          done
+          gpg --verify pages/rpm/repodata/repomd.xml.asc pages/rpm/repodata/repomd.xml
+
+      - uses: actions/upload-artifact@v7
+        if: inputs.dry_run
+        with:
+          name: pages
+          path: pages
+          include-hidden-files: true
+
+      - name: Push them
+        if: steps.key.outputs.present == 'yes' && !inputs.dry_run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --quiet --cached && { echo "nothing changed"; exit 0; }
+          git commit -q -m "Publish ${{ github.ref_name }}"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" HEAD:gh-pages
+
+  verify-apt:
+    name: Install from the APT repository (${{ matrix.name }})
+    needs: publish
+    if: inputs.dry_run
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: Debian 13
+            image: debian:trixie
+            codename: trixie
+          - name: Ubuntu 26.04
+            image: ubuntu:26.04
+            codename: resolute
+    container: ${{ matrix.image }}
+    env:
+      DEBIAN_FRONTEND: noninteractive
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: pages
+          path: pages
+      - name: Install from the repository that was just built
+        run: |
+          apt-get update -qq && apt-get install -y --no-install-recommends gpg
+          install -d -m 0755 /etc/apt/keyrings
+          gpg --dearmor -o /etc/apt/keyrings/face-unlock.gpg < pages/KEY.gpg
+          echo "deb [signed-by=/etc/apt/keyrings/face-unlock.gpg] file://$PWD/pages/deb/${{ matrix.codename }} ./" \
+            > /etc/apt/sources.list.d/face-unlock.list
+          apt-get update
+          apt-get install -y face-unlock
+          useradd -m tester
+          runuser -u tester -- face-unlock --version
+
+  verify-dnf:
+    name: Install from the RPM repository
+    needs: publish
+    if: inputs.dry_run
+    runs-on: ubuntu-latest
+    container: fedora:latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: pages
+          path: pages
+      - uses: actions/download-artifact@v8
+        with:
+          name: rpm
+          path: signer
+      - name: Install from the repository that was just built
+        run: |
+          rpm --import pages/KEY.gpg
+          rpm --import signer/rpm-signer.asc
+          cat > /etc/yum.repos.d/face-unlock.repo <<EOF
+          [face-unlock]
+          name=face-unlock
+          baseurl=file://$PWD/pages/rpm
+          enabled=1
+          gpgcheck=1
+          repo_gpgcheck=1
+          gpgkey=file://$PWD/pages/KEY.gpg
+          EOF
+          dnf install -y face-unlock util-linux
+          useradd -m tester
+          runuser -u tester -- face-unlock --version

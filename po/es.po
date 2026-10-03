@@ -1,0 +1,1324 @@
+# Spanish translation for face-unlock.
+# Copyright (C) 2026 Felitendo
+# This file is distributed under the same license as face-unlock.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: face-unlock 1.0.1\n"
+"Report-Msgid-Bugs-To: https://github.com/LoonixTools/face-unlock/issues\n"
+"POT-Creation-Date: 2026-09-28 14:38+0200\n"
+"PO-Revision-Date: 2026-09-24 12:00+0200\n"
+"Last-Translator: Felitendo\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/face-unlock:50
+msgid ""
+"Face unlock's service has to be switched on once for this computer. That "
+"needs your password."
+msgstr ""
+"El servicio de desbloqueo facial tiene que activarse una vez en este equipo. "
+"Para ello hace falta tu contraseña."
+
+#: src/face-unlock:57
+#, sh-printf-format
+msgid "Check it with: systemctl status %s"
+msgstr "Compruébalo con: systemctl status %s"
+
+#: src/face-unlock:67
+msgid ""
+"Setting up a face needs the camera picture on screen. Run this inside your "
+"desktop session."
+msgstr ""
+"Para configurar una cara, la imagen de la cámara tiene que verse en "
+"pantalla. Ejecuta esto dentro de tu sesión de escritorio."
+
+#: src/face-unlock:71
+msgid "The setup window is open. Follow it there."
+msgstr "La ventana de configuración está abierta. Sigue los pasos allí."
+
+#: src/face-unlock:80
+msgid "The face is set up."
+msgstr "La cara está configurada."
+
+#: src/face-unlock:83
+#, sh-printf-format
+msgid "Face unlock is still off. Turn it on with [1] or `%s enable`."
+msgstr ""
+"El desbloqueo facial sigue desactivado. Actívalo con [1] o `%s enable`."
+
+#: src/face-unlock:87
+msgid "No face was added."
+msgstr "No se añadió ninguna cara."
+
+#: src/face-unlock:96
+msgid "First, set up your face."
+msgstr "Primero, configura tu cara."
+
+#: src/face-unlock:100 src/face-unlock:154 src/lib/menu.sh:531
+#: src/lib/menu.sh:535 src/lib/menu.sh:541 src/lib/menu.sh:543
+#: src/lib/system.sh:410 src/lib/system.sh:416
+msgid "Could not save the setting."
+msgstr "No se pudo guardar el ajuste."
+
+#: src/face-unlock:104
+msgid "Could not start the lock screen agent."
+msgstr "No se pudo iniciar el agente de la pantalla de bloqueo."
+
+#: src/face-unlock:107
+msgid "No systemd user session, so the lock screen agent was not started."
+msgstr ""
+"No hay sesión de usuario de systemd, así que no se inició el agente de la "
+"pantalla de bloqueo."
+
+#: src/face-unlock:127
+msgid "Could not switch on the GNOME extension that shows the bubble."
+msgstr "No se pudo activar la extensión de GNOME que muestra la burbuja."
+
+#: src/face-unlock:128
+msgid "Log out and back in once: then GNOME shows the bubble too."
+msgstr ""
+"Cierra la sesión y vuelve a entrar una vez: entonces GNOME también muestra "
+"la burbuja."
+
+#: src/face-unlock:139
+msgid "Pick your lock screen in the window."
+msgstr "Elige tu pantalla de bloqueo en la ventana."
+
+#: src/face-unlock:140
+msgid "No lock screen picked. You can do it later under Settings."
+msgstr ""
+"No se eligió ninguna pantalla de bloqueo. Puedes hacerlo luego en Ajustes."
+
+#: src/face-unlock:144
+#, sh-printf-format
+msgid ""
+"The lock screen (%s) takes your face too. If it does not scan when you come "
+"back, press Enter on the empty password field."
+msgstr ""
+"La pantalla de bloqueo (%s) también acepta tu cara. Si no escanea cuando "
+"vuelves, pulsa Intro en el campo de contraseña vacío."
+
+#: src/face-unlock:147
+msgid "Face unlock is on. Lock the screen and look at it to try."
+msgstr ""
+"El desbloqueo facial está activado. Bloquea la pantalla y mírala para "
+"probarlo."
+
+#: src/face-unlock:149
+msgid "It can do sudo and admin prompts too. See Settings."
+msgstr ""
+"También funciona con sudo y las solicitudes de administrador. Consulta "
+"Ajustes."
+
+#: src/face-unlock:165
+msgid "Face unlock is off. Your faces are kept; delete them under Faces."
+msgstr ""
+"El desbloqueo facial está desactivado. Tus caras se conservan; bórralas en "
+"Caras."
+
+#: src/face-unlock:179 src/lib/daemon.sh:109
+msgid "No face is set up yet."
+msgstr "Todavía no hay ninguna cara configurada."
+
+#: src/face-unlock:183 src/lib/menu.sh:180 src/lib/menu.sh:705
+msgid "on"
+msgstr "activado"
+
+#: src/face-unlock:183 src/lib/menu.sh:182 src/lib/menu.sh:192
+#: src/lib/menu.sh:706
+msgid "off"
+msgstr "desactivado"
+
+#: src/face-unlock:185 src/lib/menu.sh:723
+#, sh-printf-format
+msgid "%s samples, %s learned"
+msgstr "%s muestras, %s aprendidas"
+
+#: src/face-unlock:191
+#, sh-printf-format
+msgid "Which face? See `%s faces` for the ids."
+msgstr "¿Qué cara? Consulta `%s faces` para ver los ID."
+
+#: src/face-unlock:195
+msgid "Deleted."
+msgstr "Borrado."
+
+#: src/face-unlock:206
+msgid "Usage: face-unlock [command]"
+msgstr "Uso: face-unlock [comando]"
+
+#: src/face-unlock:208
+msgid "Commands:"
+msgstr "Comandos:"
+
+#: src/face-unlock:209
+msgid "Turn face unlock on"
+msgstr "Activar el desbloqueo facial"
+
+#: src/face-unlock:210
+msgid "Turn it off (faces are kept)"
+msgstr "Desactivarlo (las caras se conservan)"
+
+#: src/face-unlock:211 src/lib/menu.sh:791
+msgid "Add a face"
+msgstr "Añadir una cara"
+
+#: src/face-unlock:212
+msgid "List the faces"
+msgstr "Listar las caras"
+
+#: src/face-unlock:213
+msgid "Delete a face"
+msgstr "Borrar una cara"
+
+#: src/face-unlock:214
+msgid "Look at the camera and see what it sees"
+msgstr "Mirar a la cámara y ver lo que ve"
+
+#: src/face-unlock:215
+msgid "Lock the screen"
+msgstr "Bloquear la pantalla"
+
+#: src/face-unlock:216
+msgid "Show what is on"
+msgstr "Mostrar qué está activado"
+
+#: src/face-unlock:217
+msgid "Show this help"
+msgstr "Mostrar esta ayuda"
+
+#: src/face-unlock:218
+msgid "Show the version"
+msgstr "Mostrar la versión"
+
+#: src/face-unlock:220
+msgid "Without a command an interactive menu is shown."
+msgstr "Sin comando se muestra un menú interactivo."
+
+#: src/face-unlock:239
+msgid ""
+"Run this as your own user, not as root. It asks for your password when it "
+"needs to."
+msgstr ""
+"Ejecuta esto con tu propio usuario, no como root. Pide tu contraseña cuando "
+"la necesita."
+
+#: src/face-unlock:262 src/lib/system.sh:106
+#, sh-printf-format
+msgid "Unknown command: %s"
+msgstr "Comando desconocido: %s"
+
+#: src/lib/common.sh:173
+msgid "never"
+msgstr "nunca"
+
+#: src/lib/common.sh:183
+msgid "just now"
+msgstr "ahora mismo"
+
+#: src/lib/common.sh:185
+msgid "1 minute ago"
+msgstr "hace 1 minuto"
+
+#: src/lib/common.sh:188
+#, sh-printf-format
+msgid "%d minutes ago"
+msgstr "hace %d minutos"
+
+#: src/lib/common.sh:190
+msgid "1 hour ago"
+msgstr "hace 1 hora"
+
+#: src/lib/common.sh:193
+#, sh-printf-format
+msgid "%d hours ago"
+msgstr "hace %d horas"
+
+#: src/lib/common.sh:195
+msgid "1 day ago"
+msgstr "hace 1 día"
+
+#: src/lib/common.sh:198
+#, sh-printf-format
+msgid "%d days ago"
+msgstr "hace %d días"
+
+#: src/lib/daemon.sh:102
+msgid "The face did not match."
+msgstr "La cara no coincidió."
+
+#: src/lib/daemon.sh:103
+msgid "That looked like a photo or a screen."
+msgstr "Parecía una foto o una pantalla."
+
+#: src/lib/daemon.sh:104
+msgid "The face matched, but did not blink or move."
+msgstr "La cara coincidió, pero no parpadeó ni se movió."
+
+#: src/lib/daemon.sh:105
+msgid "The face was not looking at the screen."
+msgstr "La cara no miraba a la pantalla."
+
+#: src/lib/daemon.sh:106
+msgid "The picture was too dark, too blurry or too far away."
+msgstr "La imagen estaba demasiado oscura, borrosa o lejos."
+
+#: src/lib/daemon.sh:107
+msgid "No face in view."
+msgstr "No hay ninguna cara a la vista."
+
+#: src/lib/daemon.sh:108
+msgid ""
+"Face unlock is paused after too many tries. Unlock once with your password."
+msgstr ""
+"El desbloqueo facial está en pausa tras demasiados intentos. Desbloquea una "
+"vez con tu contraseña."
+
+#: src/lib/daemon.sh:110
+msgid "The camera could not be used."
+msgstr "No se pudo usar la cámara."
+
+#: src/lib/daemon.sh:111
+msgid "Another app is using the camera."
+msgstr "Otra aplicación está usando la cámara."
+
+#: src/lib/daemon.sh:112 src/lib/menu.sh:273
+msgid "The recognition models are missing. Reinstall the package."
+msgstr "Faltan los modelos de reconocimiento. Reinstala el paquete."
+
+#: src/lib/daemon.sh:113
+msgid "The lid is closed."
+msgstr "La tapa está cerrada."
+
+#: src/lib/daemon.sh:114
+msgid "The camera is busy with another scan."
+msgstr "La cámara está ocupada con otro escaneo."
+
+#: src/lib/daemon.sh:115
+msgid "The face unlock service is not running."
+msgstr "El servicio de desbloqueo facial no está en marcha."
+
+#: src/lib/daemon.sh:117
+msgid "Not allowed."
+msgstr "No permitido."
+
+#: src/lib/daemon.sh:121
+msgid "No password window? Start a polkit agent, for example hyprpolkitagent."
+msgstr ""
+"¿No aparece la ventana de contraseña? Inicia un agente de polkit, por "
+"ejemplo hyprpolkitagent."
+
+#: src/lib/daemon.sh:124
+#, sh-printf-format
+msgid "Something went wrong (%s)."
+msgstr "Algo salió mal (%s)."
+
+#: src/lib/daemon.sh:135
+msgid "Look at the camera. Blink once, or turn your head a little."
+msgstr "Mira a la cámara. Parpadea una vez o gira un poco la cabeza."
+
+#: src/lib/daemon.sh:145
+msgid "Face found."
+msgstr "Cara encontrada."
+
+#: src/lib/daemon.sh:149
+msgid "Recognised. Now blink once, or turn your head a little."
+msgstr "Reconocida. Ahora parpadea una vez o gira un poco la cabeza."
+
+#: src/lib/daemon.sh:150
+msgid "Look at the screen."
+msgstr "Mira a la pantalla."
+
+#: src/lib/daemon.sh:151
+msgid "Move closer to the camera."
+msgstr "Acércate a la cámara."
+
+#: src/lib/daemon.sh:152
+msgid "It is too dark to see your face."
+msgstr "Está demasiado oscuro para ver tu cara."
+
+#: src/lib/daemon.sh:161
+msgid "match"
+msgstr "similitud"
+
+#: src/lib/daemon.sh:161
+msgid "turn"
+msgstr "giro"
+
+#: src/lib/daemon.sh:162
+msgid "eyes"
+msgstr "ojos"
+
+#: src/lib/daemon.sh:163
+msgid "depth"
+msgstr "profundidad"
+
+#: src/lib/daemon.sh:163 src/lib/daemon.sh:172
+msgid "blink"
+msgstr "parpadeo"
+
+#: src/lib/daemon.sh:164
+msgid "glare"
+msgstr "reflejo"
+
+#: src/lib/daemon.sh:164
+msgid "edge"
+msgstr "borde"
+
+#: src/lib/daemon.sh:173
+msgid "head turn"
+msgstr "giro de cabeza"
+
+#: src/lib/daemon.sh:175
+#, sh-printf-format
+msgid "Recognised as %s (match %s) in %s ms."
+msgstr "Reconocido como %s (similitud %s) en %s ms."
+
+#: src/lib/daemon.sh:176
+#, sh-printf-format
+msgid "Sign of life: %s"
+msgstr "Señal de vida: %s"
+
+#: src/lib/daemon.sh:181
+msgid ""
+"That was too many tries. Face unlock is paused until you unlock with your "
+"password."
+msgstr ""
+"Demasiados intentos. El desbloqueo facial está en pausa hasta que "
+"desbloquees con tu contraseña."
+
+#. TRANSLATORS: the letter after "[" is the key for yes. y works too.
+#: src/lib/menu.sh:141
+msgid "[y/N]"
+msgstr "[s/N]"
+
+#: src/lib/menu.sh:172 src/lib/menu.sh:597
+msgid "ON"
+msgstr "ACTIVADO"
+
+#: src/lib/menu.sh:174 src/lib/menu.sh:598
+msgid "OFF"
+msgstr "DESACTIVADO"
+
+#: src/lib/menu.sh:190 src/lib/menu.sh:194
+msgid "strict"
+msgstr "estricto"
+
+#: src/lib/menu.sh:191
+msgid "basic"
+msgstr "básico"
+
+#: src/lib/menu.sh:193 src/lib/menu.sh:198
+msgid "normal"
+msgstr "normal"
+
+#: src/lib/menu.sh:195
+msgid "relaxed"
+msgstr "flexible"
+
+#: src/lib/menu.sh:196
+msgid "island with the face"
+msgstr "isla con la cara"
+
+#: src/lib/menu.sh:197
+msgid "small pill with a lock"
+msgstr "pastilla con candado"
+
+#: src/lib/menu.sh:199
+msgid "fast"
+msgstr "rápida"
+
+#: src/lib/menu.sh:200
+msgid "slow"
+msgstr "lenta"
+
+#: src/lib/menu.sh:201
+#, sh-printf-format
+msgid "%s seconds"
+msgstr "%s segundos"
+
+#: src/lib/menu.sh:202 src/lib/menu.sh:466
+msgid "automatic"
+msgstr "automática"
+
+#: src/lib/menu.sh:203
+msgid "face-unlock's"
+msgstr "la de face-unlock"
+
+#: src/lib/menu.sh:204
+msgid "yours"
+msgstr "la tuya"
+
+#: src/lib/menu.sh:215
+msgid ""
+"No polkit agent is running, so no password window can open. Adding a face "
+"and the admin prompts need one."
+msgstr ""
+"No se está ejecutando ningún agente de polkit, así que no se puede abrir "
+"ninguna ventana de contraseña. Añadir una cara y las solicitudes de "
+"administrador lo necesitan."
+
+#: src/lib/menu.sh:226
+msgid "Face unlock"
+msgstr "Desbloqueo facial"
+
+#: src/lib/menu.sh:230
+msgid "Service"
+msgstr "Servicio"
+
+#: src/lib/menu.sh:230
+msgid "not running"
+msgstr "detenido"
+
+#: src/lib/menu.sh:232
+msgid "Turning face unlock on again starts it."
+msgstr "Al volver a activar el desbloqueo facial, se inicia."
+
+#: src/lib/menu.sh:244 src/lib/menu.sh:246 src/lib/menu.sh:701
+#: src/lib/menu.sh:792
+msgid "Faces"
+msgstr "Caras"
+
+#: src/lib/menu.sh:244
+msgid "none set up yet"
+msgstr "ninguna configurada aún"
+
+#: src/lib/menu.sh:246
+msgid "all turned off"
+msgstr "todas desactivadas"
+
+#: src/lib/menu.sh:252
+msgid "none found"
+msgstr "ninguna encontrada"
+
+#: src/lib/menu.sh:254 src/lib/menu.sh
+msgid "Camera"
+msgstr "Cámara"
+
+#: src/lib/menu.sh:256 src/lib/menu.sh
+msgid "Lock screen"
+msgstr "Pantalla de bloqueo"
+
+#: src/lib/menu.sh:260
+msgid "sudo"
+msgstr "sudo"
+
+#: src/lib/menu.sh:261 src/lib/menu.sh
+msgid "Admin prompts"
+msgstr "Solicitudes de administrador"
+
+#: src/lib/menu.sh:263 src/lib/menu.sh
+msgid "Lock screens"
+msgstr "Pantallas de bloqueo"
+
+#: src/lib/menu.sh:265 src/lib/menu.sh
+msgid "Photo check"
+msgstr "Detección de fotos"
+
+#: src/lib/menu.sh:268
+msgid "Paused"
+msgstr "En pausa"
+
+#: src/lib/menu.sh:268
+#, sh-printf-format
+msgid "for %d more minutes, or until the password is used"
+msgstr "%d minutos más, o hasta que se use la contraseña"
+
+#: src/lib/menu.sh:270
+msgid "Last unlock"
+msgstr "Último desbloqueo"
+
+#: src/lib/menu.sh:276
+msgid "The lock screen agent is not running."
+msgstr "El agente de la pantalla de bloqueo no se está ejecutando."
+
+#: src/lib/menu.sh:334
+msgid ""
+"On GNOME a small GNOME extension shows the bubble. Turning face unlock on "
+"switches it on."
+msgstr ""
+"En GNOME, una pequeña extensión de GNOME muestra la burbuja. Al activar el "
+"desbloqueo facial se activa también."
+
+#: src/lib/menu.sh:338
+msgid ""
+"Scans when you come back to hyprlock, swaylock or face-unlock's own lock "
+"screen (`face-unlock lock`, with the bubble), and opens them. Other lock "
+"screens scan on Enter."
+msgstr ""
+"Escanea cuando vuelves a hyprlock, swaylock o la pantalla de bloqueo propia "
+"de face-unlock (`face-unlock lock`, con la burbuja) y los abre. Las demás "
+"pantallas de bloqueo escanean con Intro."
+
+#: src/lib/menu.sh:343
+msgid ""
+"Unlocks the lock screen when it sees your face. Off: only your password "
+"works there."
+msgstr ""
+"Desbloquea la pantalla de bloqueo cuando ve tu cara. Desactivado: ahí solo "
+"sirve tu contraseña."
+
+#: src/lib/menu.sh:344
+msgid ""
+"Scans when you press a key or move the mouse on the lock screen, and when "
+"the computer wakes up."
+msgstr ""
+"Escanea cuando pulsas una tecla o mueves el ratón en la pantalla de bloqueo, "
+"y cuando el equipo se despierta."
+
+#: src/lib/menu.sh:345
+msgid ""
+"Scans as soon as the screen locks. Off by default: if you lock it yourself, "
+"it would unlock again right away."
+msgstr ""
+"Escanea en cuanto se bloquea la pantalla. Desactivado por defecto: si la "
+"bloqueas tú, se desbloquearía enseguida."
+
+#: src/lib/menu.sh:346
+msgid ""
+"sudo takes your face instead of the password. No match: you type the "
+"password as usual."
+msgstr ""
+"sudo usa tu cara en lugar de la contraseña. Si no coincide, escribes la "
+"contraseña como siempre."
+
+#: src/lib/menu.sh:347
+msgid ""
+"face-unlock's lock screen shows the bubble, and you lock with `face-unlock "
+"lock`. Or keep yours: hyprlock then shows a line of text at the top. Enter "
+"opens the choice."
+msgstr ""
+"La pantalla de bloqueo de face-unlock muestra la burbuja, y bloqueas con "
+"`face-unlock lock`. O quédate con la tuya: hyprlock muestra entonces una "
+"línea de texto arriba. Intro abre la elección."
+
+#: src/lib/menu.sh:348
+msgid ""
+"The picture behind face-unlock's own lock screen (`face-unlock lock`). "
+"Empty: the one on your desktop. Or a file, a folder to take one from at "
+"random, or `none`. Enter to type it."
+msgstr ""
+"La imagen detrás de la pantalla de bloqueo de face-unlock (`face-unlock "
+"lock`). Vacío: la de tu escritorio. O un archivo, una carpeta de la que se "
+"elige una al azar, o `none`. Intro para escribirla."
+
+#: src/lib/menu.sh:349
+msgid "Blurs the picture behind face-unlock's own lock screen."
+msgstr "Desenfoca la imagen detrás de la pantalla de bloqueo de face-unlock."
+
+#: src/lib/menu.sh:350
+#, sh-printf-format
+msgid ""
+"The lock screen takes your face in its password check. Press Enter on the "
+"empty field to scan. Found here: %s."
+msgstr ""
+"La pantalla de bloqueo acepta tu cara en su comprobación de contraseña. "
+"Pulsa Intro en el campo vacío para escanear. Encontradas aquí: %s."
+
+#: src/lib/menu.sh:351
+msgid ""
+"The password windows of your desktop and apps, for example when you install "
+"software. No match: you type the password."
+msgstr ""
+"Las ventanas de contraseña de tu escritorio y de las aplicaciones, por "
+"ejemplo al instalar software. Si no coincide, escribes la contraseña."
+
+#: src/lib/menu.sh:352
+msgid ""
+"sudo in an SSH session takes your face too, if you sit at this computer. Off "
+"by default: the person at the camera may not be the one typing."
+msgstr ""
+"sudo en una sesión SSH también usa tu cara, si estás frente a este "
+"ordenador. Desactivado por defecto: quien está ante la cámara puede no ser "
+"quien escribe."
+
+#: src/lib/menu.sh:353
+msgid ""
+"You have to blink or turn your head a little. This also stops printed photos."
+msgstr ""
+"Tienes que parpadear o girar un poco la cabeza. Esto también frena las fotos "
+"impresas."
+
+#: src/lib/menu.sh:354
+msgid "No check at all. Only for trying out a camera."
+msgstr "Sin comprobación. Solo para probar una cámara."
+
+#: src/lib/menu.sh:355
+msgid ""
+"Stops photos on a phone, a tablet or glossy paper. You do not have to blink. "
+"A matte printed photo can get through."
+msgstr ""
+"Frena fotos en un móvil, una tableta o papel brillante. No hace falta "
+"parpadear. Una foto impresa en papel mate puede pasar."
+
+#: src/lib/menu.sh:356
+msgid ""
+"Fewer wrong matches, but it may not know you with glasses or in bad light."
+msgstr ""
+"Menos coincidencias erróneas, pero puede que no te reconozca con gafas o con "
+"poca luz."
+
+#: src/lib/menu.sh:357
+msgid "Knows you more easily, but also somebody who looks a lot like you."
+msgstr ""
+"Te reconoce con más facilidad, pero también a alguien que se parezca mucho a "
+"ti."
+
+#: src/lib/menu.sh:358
+msgid "The default. Right for most people."
+msgstr "El valor por defecto. Adecuado para la mayoría."
+
+#: src/lib/menu.sh:359
+msgid ""
+"Your eyes have to be open and on the screen. So it does not unlock while you "
+"look away or sleep."
+msgstr ""
+"Tus ojos tienen que estar abiertos y mirando a la pantalla. Así no se "
+"desbloquea mientras miras a otro lado o duermes."
+
+#: src/lib/menu.sh:360
+msgid ""
+"Automatic takes the first normal camera. After a change, set up your face "
+"again. An infrared camera needs its light on (linux-enable-ir-emitter)."
+msgstr ""
+"Automática usa la primera cámara normal. Tras un cambio, vuelve a configurar "
+"tu cara. Una cámara infrarroja necesita su luz encendida (linux-enable-ir-"
+"emitter)."
+
+#: src/lib/menu.sh:361
+msgid "How long the camera looks for your face before it gives up."
+msgstr "Cuánto tiempo busca la cámara tu cara antes de rendirse."
+
+#: src/lib/menu.sh:362
+msgid ""
+"After a sure match it keeps how you look now. So a new haircut or glasses "
+"need no new setup."
+msgstr ""
+"Tras una coincidencia segura, recuerda tu aspecto actual. Así, un corte de "
+"pelo nuevo o unas gafas no piden configurar de nuevo."
+
+#: src/lib/menu.sh:363
+msgid ""
+"No scan while the laptop is closed, for example at a desk with an external "
+"screen."
+msgstr ""
+"Sin escaneo mientras el portátil está cerrado, por ejemplo en un escritorio "
+"con una pantalla externa."
+
+#: src/lib/menu.sh:364
+msgid "The bubble at the top of the screen shows what the camera is doing."
+msgstr ""
+"La burbuja en la parte superior de la pantalla muestra lo que hace la cámara."
+
+#: src/lib/menu.sh:365
+msgid "A small pill with a lock that opens."
+msgstr "Una pequeña pastilla con un candado que se abre."
+
+#: src/lib/menu.sh:366
+msgid "An island with a face that looks around, then rings and a tick."
+msgstr ""
+"Una isla con una cara que mira alrededor, luego anillos y una marca de "
+"verificación."
+
+#: src/lib/menu.sh:367
+msgid "How fast the bubble moves."
+msgstr "La velocidad a la que se mueve la burbuja."
+
+#: src/lib/menu.sh:368
+msgid "Shows the bubble when sudo or an admin prompt scans your face, too."
+msgstr ""
+"Muestra la burbuja también cuando sudo o una solicitud de administrador "
+"escanea tu cara."
+
+#: src/lib/menu.sh:369
+msgid ""
+"When another app uses the camera, for example in a video call, no bubble "
+"shows and you type your password as usual. Off: the bubble shows a camera "
+"with a line through it."
+msgstr ""
+"Cuando otra aplicación usa la cámara, por ejemplo en una videollamada, no "
+"aparece la burbuja y escribes la contraseña como siempre. Desactivado: la "
+"burbuja muestra una cámara tachada."
+
+#: src/lib/menu.sh:462
+#, sh-printf-format
+msgid "automatic (%s)"
+msgstr "automática (%s)"
+
+#: src/lib/menu.sh:472
+msgid "(infrared)"
+msgstr "(infrarroja)"
+
+#: src/lib/menu.sh:476
+msgid "(not connected)"
+msgstr "(no conectada)"
+
+#: src/lib/menu.sh:485
+msgid "same as desktop"
+msgstr "como el escritorio"
+
+#: src/lib/menu.sh:489
+msgid "none"
+msgstr "ninguna"
+
+#: src/lib/menu.sh:518
+msgid "Picture or folder:"
+msgstr "Imagen o carpeta:"
+
+#: src/lib/menu.sh:523
+#, sh-printf-format
+msgid "Not found: %s"
+msgstr "No encontrado: %s"
+
+#: src/lib/menu.sh:594 src/lib/menu.sh:793
+msgid "Settings"
+msgstr "Ajustes"
+
+#: src/lib/menu.sh:595
+msgid "↑↓ select   ←→ or Space: change   q: back"
+msgstr "↑↓ elegir   ←→ o Espacio: cambiar   q: volver"
+
+#: src/lib/menu.sh:596
+msgid "for all users, asks for your password"
+msgstr "para todos los usuarios, pide tu contraseña"
+
+#. TRANSLATORS: keep the letters, they are the keys.
+#: src/lib/menu.sh:703
+msgid "Up/Down: select, Space: on/off, r: rename, d: delete, a: add, q: back"
+msgstr ""
+"Arriba/Abajo: elegir, Espacio: activar/desactivar, r: renombrar, d: borrar, "
+"a: añadir, q: volver"
+
+#: src/lib/menu.sh:704
+msgid "No face is set up yet. Press a to add one."
+msgstr "Todavía no hay ninguna cara configurada. Pulsa a para añadir una."
+
+#: src/lib/menu.sh:752
+msgid "New name:"
+msgstr "Nuevo nombre:"
+
+#: src/lib/menu.sh:759
+#, sh-printf-format
+msgid "Delete \"%s\"?"
+msgstr "¿Borrar «%s»?"
+
+#: src/lib/menu.sh:790
+msgid "Turn face unlock on or off"
+msgstr "Activar o desactivar el desbloqueo facial"
+
+#: src/lib/menu.sh:794
+msgid "Try it"
+msgstr "Probarlo"
+
+#: src/lib/menu.sh:796
+msgid "Install a polkit agent"
+msgstr "Instalar un agente de polkit"
+
+#: src/lib/menu.sh:798
+msgid "Quit"
+msgstr "Salir"
+
+#: src/lib/migrate.sh:127
+msgid ""
+"Moving your faces and settings over from plasma-face-unlock. That needs your "
+"password."
+msgstr ""
+"Pasando tus caras y ajustes desde plasma-face-unlock. Para eso hace falta tu "
+"contraseña."
+
+#: src/lib/pam.sh:197
+#, sh-printf-format
+msgid "The PAM module is not installed at %s."
+msgstr "El módulo PAM no está instalado en %s."
+
+#: src/lib/pam.sh:205
+#, sh-printf-format
+msgid "There is no PAM configuration for %s on this system."
+msgstr "No hay configuración PAM para %s en este sistema."
+
+#: src/lib/system.sh:50
+msgid "This needs root, and neither sudo, run0 nor doas is installed."
+msgstr "Esto necesita root, y no está instalado ni sudo, ni run0, ni doas."
+
+#: src/lib/system.sh:59
+msgid "This command has to run as root."
+msgstr "Este comando tiene que ejecutarse como root."
+
+#: src/lib/system.sh:67
+#, sh-printf-format
+msgid "Not a valid setting: %s=%s"
+msgstr "Ajuste no válido: %s=%s"
+
+#: src/lib/system.sh:83
+#, sh-printf-format
+msgid "Not a service this can be used for: %s"
+msgstr "No se puede usar para este servicio: %s"
+
+#: src/lib/system.sh:155
+#, sh-printf-format
+msgid ""
+"Hyprland does not start the lock screen agent by itself. Add this to %s:"
+msgstr ""
+"Hyprland no inicia por sí solo el agente de la pantalla de bloqueo. Añade "
+"esto a %s:"
+
+#: src/lib/system.sh:157
+#, sh-printf-format
+msgid "Hyprland does not start the polkit agent by itself. Add this to %s:"
+msgstr "Hyprland no inicia por sí solo el agente de polkit. Añade esto a %s:"
+
+#: src/lib/system.sh:215
+msgid "No package manager found to install a polkit agent with."
+msgstr ""
+"No se encontró ningún gestor de paquetes para instalar un agente de polkit."
+
+#: src/lib/system.sh:239
+msgid "Installing a polkit agent. That needs your password."
+msgstr "Instalando un agente de polkit. Necesita tu contraseña."
+
+#: src/lib/system.sh:240 src/lib/system.sh:242
+msgid "Could not install a polkit agent."
+msgstr "No se pudo instalar un agente de polkit."
+
+#: src/lib/system.sh:258
+#, sh-printf-format
+msgid "The polkit agent did not start. See: systemctl --user status %s"
+msgstr "El agente de polkit no se inició. Mira: systemctl --user status %s"
+
+#: src/lib/system.sh:262
+msgid "The polkit agent is running. Password windows open now."
+msgstr ""
+"El agente de polkit se está ejecutando. Ahora se abren las ventanas de "
+"contraseña."
+
+#: src/lib/system.sh:387 src/lib/system.sh:390
+#, sh-printf-format
+msgid "To lock with it, add this to %s, and set %s in %s:"
+msgstr "Para bloquear con ella, añade esto a %s y pon %s en %s:"
+
+#: src/lib/system.sh:395
+#, sh-printf-format
+msgid "To lock with it, add this to the binds in %s, and use %s in swayidle:"
+msgstr ""
+"Para bloquear con ella, añade esto a los binds de %s y usa %s en swayidle:"
+
+#: src/lib/system.sh:399
+#, sh-printf-format
+msgid "To lock with it, run %s where your lock screen is started now."
+msgstr ""
+"Para bloquear con ella, ejecuta %s donde ahora se inicia tu pantalla de "
+"bloqueo."
+
+#: src/lib/system.sh:412
+msgid "You lock with face-unlock's lock screen now."
+msgstr "Ahora bloqueas con la pantalla de bloqueo de face-unlock."
+
+#: src/lib/system.sh:419
+msgid ""
+"hyprlock shows what face unlock is doing at the top, from the next time it "
+"locks."
+msgstr ""
+"hyprlock muestra arriba lo que hace face unlock, a partir del próximo "
+"bloqueo."
+
+#: src/lib/system.sh:420
+#, sh-printf-format
+msgid "Could not add the line to %s."
+msgstr "No se pudo añadir la línea a %s."
+
+#: src/lib/system.sh:421
+msgid ""
+"Your lock screen stays as it is. Press Enter on the empty password field to "
+"scan."
+msgstr ""
+"Tu pantalla de bloqueo se queda como está. Pulsa Intro en el campo de "
+"contraseña vacío para escanear."
+
+#: src/lib/system.sh:422
+#, sh-printf-format
+msgid "hyprlock has no %s, so it cannot show the text."
+msgstr "hyprlock no tiene %s, así que no puede mostrar el texto."
+
+#: src/lib/menu.sh
+msgid "Unlock with your face"
+msgstr "Desbloquear con tu cara"
+
+#: src/lib/menu.sh
+msgid "Scan when you come back"
+msgstr "Escanear cuando vuelvas"
+
+#: src/lib/menu.sh
+msgid "Scan right after locking"
+msgstr "Escanear justo después de bloquear"
+
+#: src/lib/menu.sh
+msgid "Which lock screen"
+msgstr "Qué pantalla de bloqueo"
+
+#: src/lib/menu.sh
+msgid "Wallpaper"
+msgstr "Fondo de pantalla"
+
+#: src/lib/menu.sh
+msgid "Blur the wallpaper"
+msgstr "Desenfocar el fondo"
+
+#: src/lib/menu.sh
+msgid "Password prompts"
+msgstr "Solicitudes de contraseña"
+
+#: src/lib/menu.sh
+msgid "sudo in a terminal"
+msgstr "sudo en una terminal"
+
+#: src/lib/menu.sh
+msgid "In SSH sessions"
+msgstr "En sesiones SSH"
+
+#: src/lib/menu.sh
+msgid "Recognition"
+msgstr "Reconocimiento"
+
+#: src/lib/menu.sh
+msgid "How closely the face has to match"
+msgstr "Cuánto debe coincidir la cara"
+
+#: src/lib/menu.sh
+msgid "Only when you look at the screen"
+msgstr "Solo cuando miras la pantalla"
+
+#: src/lib/menu.sh
+msgid "How long a scan lasts"
+msgstr "Duración de un escaneo"
+
+#: src/lib/menu.sh
+msgid "Learn from every unlock"
+msgstr "Aprender de cada desbloqueo"
+
+#: src/lib/menu.sh
+msgid "Not when the lid is closed"
+msgstr "No con la tapa cerrada"
+
+#: src/lib/menu.sh
+msgid "Bubble"
+msgstr "Burbuja"
+
+#: src/lib/menu.sh
+msgid "Show the bubble"
+msgstr "Mostrar la burbuja"
+
+#: src/lib/menu.sh
+msgid "Style"
+msgstr "Estilo"
+
+#: src/lib/menu.sh
+msgid "Animation speed"
+msgstr "Velocidad de animación"
+
+#: src/lib/menu.sh
+msgid "Also for sudo and admin prompts"
+msgstr "También para sudo y solicitudes admin"
+
+#: src/lib/menu.sh
+msgid "Quiet while the camera is in use"
+msgstr "Sin burbuja si la cámara está en uso"
+
+#: src/agent/bubblecontroller.cpp:98
+msgid "Blink once"
+msgstr "Parpadea una vez"
+
+#: src/agent/bubblecontroller.cpp:100
+msgid "Look at the screen"
+msgstr "Mira a la pantalla"
+
+#: src/agent/bubblecontroller.cpp:102
+msgid "Move closer"
+msgstr "Acércate"
+
+#: src/agent/bubblecontroller.cpp:104
+msgid "Too dark"
+msgstr "Demasiado oscuro"
+
+#: src/agent/bubblecontroller.cpp:127
+msgid "Camera in use"
+msgstr "Cámara en uso"
+
+#: src/agent/bubblecontroller.cpp:136
+msgid "Use your password"
+msgstr "Usa tu contraseña"
+
+#: src/agent/bubblecontroller.cpp:142
+msgid "Not recognized"
+msgstr "No reconocido"
+
+#: src/agent/bubblecontroller.cpp:144
+msgid "Try again and blink"
+msgstr "Reintenta y parpadea"
+
+#: src/agent/bubblecontroller.cpp:146
+msgid "Camera unavailable"
+msgstr "Cámara no disponible"
+
+#: src/agent/enrollcontroller.cpp:68
+msgid "Bring your face into the circle."
+msgstr "Pon tu cara dentro del círculo."
+
+#: src/agent/enrollcontroller.cpp:70
+msgid "Only one face, please."
+msgstr "Solo una cara, por favor."
+
+#: src/agent/enrollcontroller.cpp:72
+msgid "Move a little closer."
+msgstr "Acércate un poco."
+
+#: src/agent/enrollcontroller.cpp:74
+msgid "It is too dark. Turn on a light."
+msgstr "Está demasiado oscuro. Enciende una luz."
+
+#: src/agent/enrollcontroller.cpp:76
+msgid "Too bright. Turn away from the light."
+msgstr "Demasiada luz. Dale la espalda a la luz."
+
+#: src/agent/enrollcontroller.cpp:78
+msgid "Hold still for a moment."
+msgstr "No te muevas un momento."
+
+#: src/agent/enrollcontroller.cpp:80
+msgid "Look straight at the camera."
+msgstr "Mira directamente a la cámara."
+
+#: src/agent/enrollcontroller.cpp:82
+msgid "Move your head slowly to complete the circle."
+msgstr "Mueve la cabeza despacio para completar el círculo."
+
+#: src/agent/enrollcontroller.cpp:99 src/agent/enrollcontroller.cpp:132
+msgid "Starting the camera…"
+msgstr "Iniciando la cámara…"
+
+#: src/agent/enrollcontroller.cpp:129
+msgid "Confirm with your password to add a face."
+msgstr "Confirma con tu contraseña para añadir una cara."
+
+#: src/agent/enrollcontroller.cpp:184
+msgid "Face Unlock is set up."
+msgstr "El desbloqueo facial está configurado."
+
+#: src/agent/enrollcontroller.cpp:193
+msgid "A face can only be added with your password."
+msgstr "Solo se puede añadir una cara con tu contraseña."
+
+#: src/agent/enrollcontroller.cpp:200
+msgid "The camera could not be used: %1"
+msgstr "No se pudo usar la cámara: %1"
+
+#: src/agent/enrollcontroller.cpp:202
+msgid "The face recognition models are missing. Reinstall the package."
+msgstr "Faltan los modelos de reconocimiento facial. Reinstala el paquete."
+
+#: src/agent/enrollcontroller.cpp:204
+msgid "That took too long. Try again, in good light."
+msgstr "Ha tardado demasiado. Inténtalo de nuevo, con buena luz."
+
+#: src/agent/enrollcontroller.cpp:206
+msgid "The face unlock service is not running. Turn face unlock on first."
+msgstr ""
+"El servicio de desbloqueo facial no está en marcha. Activa primero el "
+"desbloqueo facial."
+
+#: src/agent/enrollcontroller.cpp:208
+msgid "The camera is busy with another scan. Try again in a moment."
+msgstr ""
+"La cámara está ocupada con otro escaneo. Inténtalo de nuevo en un momento."
+
+#: src/agent/enrollcontroller.cpp:210
+msgid "The face could not be added (%1)."
+msgstr "No se pudo añadir la cara (%1)."
+
+#: src/agent/lockpreview.cpp:349 src/agent/lockpreview.cpp:559
+#: src/agent/locktext.cpp:45
+msgid "Looking for your face…"
+msgstr "Buscando tu cara…"
+
+#: src/agent/lockscreencontroller.cpp:172
+msgid "Wrong password"
+msgstr "Contraseña incorrecta"
+
+#: src/agent/locktext.cpp:48
+msgid "Face recognized"
+msgstr "Cara reconocida"
+
+#: src/agent/main.cpp:250
+msgid "Face unlock for the lock screen, sudo and admin prompts"
+msgstr ""
+"Desbloqueo facial para la pantalla de bloqueo, sudo y las solicitudes de "
+"administrador"
+
+#: src/agent/main.cpp:253
+msgid "Set up a face."
+msgstr "Configurar una cara."
+
+#: src/agent/main.cpp:254
+msgid "What to call the new face."
+msgstr "Cómo llamar a la nueva cara."
+
+#: src/agent/main.cpp:255
+msgid "Lock the screen."
+msgstr "Bloquear la pantalla."
+
+#: src/agent/main.cpp:256
+msgid "Play the bubble's animations once."
+msgstr "Reproducir una vez las animaciones de la burbuja."
+
+#: src/agent/main.cpp:258
+msgid "Bubble style for the demo: full or minimal."
+msgstr "Estilo de burbuja para la demo: full o minimal."
+
+#: src/agent/main.cpp:259
+msgid "Ask which lock screen to use, and print the answer."
+msgstr "Pregunta qué pantalla de bloqueo usar e imprime la respuesta."
+
+#: src/pam/pam_face_unlock.c:353
+msgid "Look at the camera to unlock."
+msgstr "Mira a la cámara para desbloquear."
+
+#: src/pam/pam_face_unlock.c:356
+msgid "Blink, or turn your head a little."
+msgstr "Parpadea o gira un poco la cabeza."
+
+#: src/pam/pam_face_unlock.c:372
+msgid "Face unlock is paused after too many tries. Use your password."
+msgstr ""
+"El desbloqueo facial está en pausa tras demasiados intentos. Usa tu "
+"contraseña."
+
+#: src/pam/pam_face_unlock.c:376
+msgid "Face not recognised."
+msgstr "Cara no reconocida."
+
+#: src/agent/qml/Enroll.qml:27
+msgid "Set up Face Unlock"
+msgstr "Configurar el desbloqueo facial"
+
+#: src/agent/qml/Enroll.qml:110
+msgid "Face Unlock"
+msgstr "Desbloqueo facial"
+
+#: src/agent/qml/Enroll.qml:111
+msgid "Confirm it is you"
+msgstr "Confirma que eres tú"
+
+#: src/agent/qml/Enroll.qml:112
+msgid "You are all set"
+msgstr "Todo listo"
+
+#: src/agent/qml/Enroll.qml:113
+msgid "Setup did not finish"
+msgstr "La configuración no terminó"
+
+#: src/agent/qml/Enroll.qml:126
+msgid ""
+"Look at the camera, then move your head slowly in a circle. Your face is "
+"turned into numbers on this computer and never stored as a picture."
+msgstr ""
+"Mira a la cámara y luego mueve la cabeza despacio en círculo. Tu cara se "
+"convierte en números en este equipo y nunca se guarda como imagen."
+
+#: src/agent/qml/Enroll.qml:128
+msgid ""
+"Lock the screen and look at it to try it out. You can add a second look, "
+"with glasses for example, from the menu."
+msgstr ""
+"Bloquea la pantalla y mírala para probarlo. Puedes añadir un segundo "
+"aspecto, con gafas por ejemplo, desde el menú."
+
+#: src/agent/qml/Enroll.qml:162
+msgid "Name (optional)"
+msgstr "Nombre (opcional)"
+
+#: src/agent/qml/Enroll.qml:177 src/agent/qml/LockChoice.qml:255
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/agent/qml/Enroll.qml:183
+msgid "Finish now"
+msgstr "Terminar ahora"
+
+#: src/agent/qml/Enroll.qml:188
+msgid "Try again"
+msgstr "Reintentar"
+
+#: src/agent/qml/Enroll.qml:188
+msgid "Get started"
+msgstr "Empezar"
+
+#: src/agent/qml/Enroll.qml:193
+msgid "Done"
+msgstr "Hecho"
+
+#: src/agent/qml/LockChoice.qml:52
+msgid "Choose your lock screen"
+msgstr "Elige tu pantalla de bloqueo"
+
+#: src/agent/qml/LockChoice.qml:198
+msgid "Your lock screen"
+msgstr "Tu pantalla de bloqueo"
+
+#: src/agent/qml/LockChoice.qml:209
+msgid ""
+"Your desktop leaves the lock screen to a program of your choice. Pick how "
+"face unlock shows up there. You can change it later under Settings."
+msgstr ""
+"Tu escritorio deja la pantalla de bloqueo a un programa que tú eliges. Elige "
+"cómo aparece face unlock ahí. Puedes cambiarlo luego en Ajustes."
+
+#: src/agent/qml/LockChoice.qml:232
+msgid "face-unlock's lock screen"
+msgstr "Pantalla de bloqueo de face-unlock"
+
+#: src/agent/qml/LockChoice.qml:233
+msgid ""
+"The bubble at the top, the time and your wallpaper. Your shortcut and idle "
+"lock then run face-unlock lock."
+msgstr ""
+"La burbuja arriba, la hora y tu fondo de pantalla. Tu atajo y el bloqueo por "
+"inactividad ejecutan entonces face-unlock lock."
+
+#: src/agent/qml/LockChoice.qml:240
+msgid "Keep your lock screen"
+msgstr "Mantener tu pantalla de bloqueo"
+
+#: src/agent/qml/LockChoice.qml:242
+msgid ""
+"It stays as it is. hyprlock shows a line of text at the top instead of the "
+"bubble. Enter on the empty password field scans."
+msgstr ""
+"Se queda como está. hyprlock muestra una línea de texto arriba en lugar de "
+"la burbuja. Intro en el campo de contraseña vacío escanea."
+
+#: src/agent/qml/LockChoice.qml:243
+msgid ""
+"It stays as it is, without the bubble. Enter on the empty password field "
+"scans."
+msgstr ""
+"Se queda como está, sin la burbuja. Intro en el campo de contraseña vacío "
+"escanea."
+
+#: src/agent/qml/LockChoice.qml:260
+msgid "Continue"
+msgstr "Continuar"
+
+#: src/agent/qml/LockScreen.qml:180
+msgid "Password"
+msgstr "Contraseña"
+
+#: src/agent/qml/LockScreen.qml:194
+msgid "Look at the camera or type your password"
+msgstr "Mira a la cámara o escribe tu contraseña"
+
+#: src/agent/qml/LockScreen.qml:195
+msgid "Type your password"
+msgstr "Escribe tu contraseña"

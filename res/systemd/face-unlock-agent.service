@@ -1,0 +1,17 @@
+[Unit]
+Description=Face unlock (lock screen and bubble)
+Documentation=man:face-unlock(1)
+PartOf=graphical-session.target
+After=graphical-session.target
+# Wayland only: the bubble is a layer-shell surface, and the lock screen is
+# watched through the compositor.
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+ExecStart=@LIBEXECDIR@/face-unlock-agent
+Restart=on-failure
+RestartSec=3
+Slice=session.slice
+
+[Install]
+WantedBy=graphical-session.target
